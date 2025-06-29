@@ -1,0 +1,25 @@
+{
+  "name": "Atlas: Your Dog Buddy",
+  "description": "Atlas the dog pops up and walks across your screen every few minutes to keep you company while you browse the web.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/atlasWalk.gif"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": ["scripts/atlasDog.js"],
+      "css": ["scripts/styles.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": ["https://www.github.com/*", "https://github.com/*"]
+}
