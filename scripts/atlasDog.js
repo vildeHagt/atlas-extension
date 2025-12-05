@@ -1,15 +1,22 @@
 // atlasDog.js
 // Injects and animates Atlas the dog walking across the screen every x minutes
 
-const ATLAS_IMAGE_URL = chrome.runtime.getURL("images/atlasWalk.gif"); // Use your dog gif
+function getAtlasImageUrl() {
+  const now = new Date();
+  if (now.getMonth() === 11) {
+    return chrome.runtime.getURL("images/christmas-atlas.gif");
+  }
+  return chrome.runtime.getURL("images/atlasWalk.gif");
+}
+
 const ATLAS_ID = "atlas-dog-walker";
-const WALK_DURATION = 10000; // ms for dog to cross the screen
-const INTERVAL_MINUTES = 3; // Change to your desired interval
+const WALK_DURATION = 20000;
+const INTERVAL_MINUTES = 3;
 
 function injectAtlasDog() {
   if (document.getElementById(ATLAS_ID)) return;
   const img = document.createElement("img");
-  img.src = ATLAS_IMAGE_URL;
+  img.src = getAtlasImageUrl();
   img.id = ATLAS_ID;
   img.style.position = "fixed";
   img.style.bottom = "1px";
