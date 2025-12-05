@@ -42,6 +42,19 @@ function walkAtlasDog() {
   }, WALK_DURATION + 1000);
 }
 
-// Start the interval
+function getRandomIntervalMinutes() {
+  // Random interval between 1 and 5 minutes
+  return Math.floor(Math.random() * 5) + 1;
+}
+
+function scheduleNextWalk() {
+  const randomMinutes = getRandomIntervalMinutes();
+  setTimeout(() => {
+    walkAtlasDog();
+    scheduleNextWalk();
+  }, randomMinutes * 60 * 1000);
+}
+
+// Start the first walk and schedule the next
 walkAtlasDog();
-setInterval(walkAtlasDog, INTERVAL_MINUTES * 60 * 1000);
+scheduleNextWalk();
