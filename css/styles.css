@@ -1,34 +1,37 @@
-body {
+body.atlas-options {
   background-color: #090a1f;
 }
 
-.divStyle {
-  text-align: center;
-}
-
-h1 {
+.atlas-h1 {
   font-family: "Jersey 10", sans-serif;
   color: #f2f1d8;
   font-size: 50px;
+  text-align: center;
 }
 
-h2 {
+.atlas-h2 {
   font-family: "Jersey 10", sans-serif;
   color: #f2f1d8;
   font-size: 30px;
+  text-align: center;
 }
 
-p {
+.atlas-p {
   font-family: "Jersey 10", sans-serif;
   color: #f2f1d8;
   font-size: 20px;
+  text-align: center;
+}
+
+.atlas-div {
+  text-align: center;
 }
 
 .mainDiv {
   margin-top: 150px;
 }
 
-.optionWrapper div {
+.optionWrapper .atlas-div {
   display: flex;
   align-items: center;
   justify-content: space-between;
