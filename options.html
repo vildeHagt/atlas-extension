@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Atlas - Options</title>
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Jersey+10"
+    />
+  </head>
+  <body>
+    <div class="mainDiv">
+      <div>
+        <img src="images/atlas1.png" width="100px" />
+      </div>
+      <div>
+        <h1>OPTIONS</h1>
+      </div>
+      <div class="settings">
+        <div class="optionWrapper">
+          <div>
+            <h2>
+              INTERVAL
+              <span style="position: relative">
+                <img class="questionmark" src="images/questionmark.png" />
+                <span class="tooltiptext"
+                  >How often should Atlas come and visit you?</span
+                >
+              </span>
+            </h2>
+            <input
+              id="intervalInput"
+              class="input"
+              type="number"
+              min="10"
+              max="100"
+              value="3"
+            />
+          </div>
+        </div>
+
+        <div class="optionWrapper">
+          <div>
+            <h2>
+              SPEED
+              <span style="position: relative">
+                <img class="questionmark" src="images/questionmark.png" />
+                <span class="tooltiptext">How fast should Atlas move?</span>
+              </span>
+            </h2>
+            <input
+              id="speedInput"
+              class="input"
+              type="number"
+              min="1"
+              max="10"
+              value="2"
+            />
+          </div>
+        </div>
+      </div>
+
+      <h2 id="status"></h2>
+      <button id="save">Save</button>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>

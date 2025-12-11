@@ -1,0 +1,81 @@
+body {
+  background-color: #090a1f;
+}
+
+div {
+  text-align: center;
+}
+
+h1 {
+  font-family: "Jersey 10", sans-serif;
+  color: #f2f1d8;
+  font-size: 50px;
+}
+
+h2 {
+  font-family: "Jersey 10", sans-serif;
+  color: #f2f1d8;
+  font-size: 30px;
+}
+
+p {
+  font-family: "Jersey 10", sans-serif;
+  color: #f2f1d8;
+  font-size: 20px;
+}
+
+.mainDiv {
+  margin-top: 150px;
+}
+
+.optionWrapper div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input {
+  height: 20px;
+}
+
+.questionmark {
+  width: 18px;
+  margin-left: 5px;
+  transition: filter 0.2s;
+}
+
+.tooltiptext {
+  display: none;
+  position: absolute;
+  bottom: 35px;
+  background: #222;
+  color: #f2f1d8;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  white-space: nowrap;
+  z-index: 10;
+  font-weight: 100;
+}
+
+span:hover .tooltiptext {
+  display: block;
+}
+
+.settings {
+  margin: auto;
+  width: 20%;
+  padding: 10px;
+}
+
+button {
+  background-color: #4a82c0;
+  color: #f2f1d8;
+  border: none;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 12px;
+}

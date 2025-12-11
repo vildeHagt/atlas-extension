@@ -17,10 +17,14 @@
   "content_scripts": [
     {
       "js": ["scripts/atlasDog.js"],
-      "css": ["scripts/styles.css"],
+      "css": ["css/styles.css"],
       "matches": ["<all_urls>"]
     }
   ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   "host_permissions": ["<all_urls>"],
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab", "storage"]
 }
