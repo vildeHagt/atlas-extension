@@ -31,10 +31,11 @@ chrome.storage.sync.get({ atlasInterval: 3, atlasSpeed: 2 }, (items) => {
   const WALK_DURATION = 2000 * invertedSpeed;
 
   walkAtlasDog(WALK_DURATION);
-  setInterval(walkAtlasDog, INTERVAL_MINUTES * 60 * 1000);
+  setInterval(() => walkAtlasDog(WALK_DURATION), INTERVAL_MINUTES * 60 * 1000);
 });
 
 function walkAtlasDog(walkDuration) {
+  console.log("Atlas injected");
   injectWalkingAtlasDog(walkDuration);
   const img = document.getElementById(ATLAS_ID);
   if (!img) return;
@@ -51,11 +52,14 @@ function walkAtlasDog(walkDuration) {
     img.style.left = `${window.innerWidth + 150}px`;
   }, 100);
 
-  setTimeout(() => {
-    diggingAtlas();
-  }, timeToDigPosition);
+  if (smellsSomethingGood()) {
+    setTimeout(() => {
+      diggingAtlas();
+    }, timeToDigPosition);
+  }
 
   setTimeout(() => {
+    console.log("Atlas removed");
     img.remove();
   }, walkDuration);
 }
@@ -90,5 +94,10 @@ function diggingAtlas() {
 }
 
 function diggingPosition() {
-  return Math.floor(500);
+  return Math.floor(Math.random() * window.innerWidth);
+}
+
+function smellsSomethingGood() {
+  const shouldDig = Math.random() < 0.5;
+  return shouldDig;
 }
