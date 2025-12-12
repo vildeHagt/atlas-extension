@@ -55,16 +55,18 @@ function walkAtlasDog(walkDuration) {
     setTimeout(() => {
       diggingAtlas();
     }, timeToDigPosition);
+  } else {
+    setTimeout(() => {
+      img.remove();
+    }, walkDuration);
   }
-
-  setTimeout(() => {
-    img.remove();
-  }, walkDuration);
 }
 
 function injectWalkingAtlasDog(walkDuration) {
-  if (document.getElementById(ATLAS_ID)) return;
-  const img = document.createElement("img");
+  var img = document.getElementById(ATLAS_ID);
+  if (img != null) {
+    img.remove();
+  }
   img.src = getWalkingAtlasImageUrl();
   img.id = ATLAS_ID;
   img.style.position = "fixed";
