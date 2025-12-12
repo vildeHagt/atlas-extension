@@ -35,7 +35,6 @@ chrome.storage.sync.get({ atlasInterval: 3, atlasSpeed: 2 }, (items) => {
 });
 
 function walkAtlasDog(walkDuration) {
-  console.log("Atlas injected");
   injectWalkingAtlasDog(walkDuration);
   const img = document.getElementById(ATLAS_ID);
   if (!img) return;
@@ -59,7 +58,6 @@ function walkAtlasDog(walkDuration) {
   }
 
   setTimeout(() => {
-    console.log("Atlas removed");
     img.remove();
   }, walkDuration);
 }
