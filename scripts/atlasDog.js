@@ -67,6 +67,7 @@ function injectWalkingAtlasDog(walkDuration) {
   if (img != null) {
     img.remove();
   }
+  img = document.createElement("img");
   img.src = getWalkingAtlasImageUrl();
   img.id = ATLAS_ID;
   img.style.position = "fixed";
