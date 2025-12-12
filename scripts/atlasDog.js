@@ -68,7 +68,7 @@ function injectWalkingAtlasDog(walkDuration) {
   img.src = getWalkingAtlasImageUrl();
   img.id = ATLAS_ID;
   img.style.position = "fixed";
-  img.style.bottom = "1px";
+  img.style.bottom = "0px";
   img.style.left = "-150px";
   img.style.right = "";
   img.style.height = "60px";
@@ -82,13 +82,20 @@ function diggingAtlas() {
   if (!img) return;
 
   const currentLeft = window.getComputedStyle(img).left;
-  img.style.transition = "";
+  img.src = getDiggingAtlasImageUrl();
+  img.style.transition = "none";
   img.style.left = currentLeft;
   img.style.height = "50px";
+  img.style.position = "fixed";
+  img.style.bottom = "-2px";
 
-  img.src = getDiggingAtlasImageUrl();
-  img.style.transition = `bottom 10000ms ease-in`;
-  img.style.bottom = "-60px";
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      img.style.willChange = "bottom";
+      img.style.transition = "bottom 10000ms ease-in";
+      img.style.bottom = "-60px";
+    });
+  });
 }
 
 function diggingPosition() {
