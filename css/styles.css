@@ -71,7 +71,7 @@ span:hover .tooltiptext {
   padding: 10px;
 }
 
-button {
+.atlas-button {
   background-color: #4a82c0;
   color: #f2f1d8;
   border: none;
