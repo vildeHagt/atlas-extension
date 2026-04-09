@@ -78,14 +78,16 @@ function walkAtlasDog(walkDuration) {
   }
 }
 
-function injectWalkingAtlasDog(walkDuration) {
+function injectWalkingAtlasDog(walkDuration, keepBall) {
   let img = document.getElementById(ATLAS_ID);
   if (img != null) {
     img.remove();
   }
-  const ball = document.getElementById(BALL_ID);
-  if (ball != null) {
-    ball.remove();
+  if (!keepBall) {
+    const ball = document.getElementById(BALL_ID);
+    if (ball != null) {
+      ball.remove();
+    }
   }
   img = document.createElement("img");
   img.src = getWalkingAtlasImageUrl();
@@ -113,24 +115,26 @@ function createTennisBall(x) {
   ball.style.backgroundColor = "#ccff00";
   ball.style.border = "1px solid #a0c800";
   ball.style.left = x + "px";
-  ball.style.top = "-20px";
+  ball.style.bottom = "100vh";
   ball.style.zIndex = "99999";
   ball.style.animation =
-    "atlas-ball-drop " + BALL_DROP_DURATION + "ms ease-in forwards";
+    `atlas-ball-drop ${BALL_DROP_DURATION}ms ease-in forwards`;
   document.body.appendChild(ball);
   return ball;
 }
 
 function fetchBallAtlas(walkDuration) {
-  // Pick a random landing position for the ball
-  const ballX = Math.floor(Math.random() * (window.innerWidth - 100)) + 50;
+  // Drop the ball from the right side of the screen
+  const ballX =
+    Math.floor(Math.random() * (window.innerWidth * 0.3)) +
+    Math.floor(window.innerWidth * 0.6);
 
   // Drop the tennis ball with a bounce
   const ball = createTennisBall(ballX);
 
   // After the ball lands, Atlas enters to fetch it
   setTimeout(() => {
-    injectWalkingAtlasDog(walkDuration);
+    injectWalkingAtlasDog(walkDuration, true);
     const img = document.getElementById(ATLAS_ID);
     if (!img) return;
 
@@ -145,12 +149,17 @@ function fetchBallAtlas(walkDuration) {
       img.style.left = `${ballX}px`;
     }, 100);
 
-    // When Atlas reaches the ball, pick it up and walk off screen
+    // When Atlas reaches the ball, attach ball to mouth and walk off screen
     setTimeout(() => {
-      // Remove the ball (Atlas picked it up)
-      ball.remove();
+      const fetchedBall = document.getElementById(BALL_ID);
+      if (fetchedBall) {
+        // Position ball near Atlas's mouth (right side, vertically centered)
+        fetchedBall.style.animation = "none";
+        fetchedBall.style.bottom = "25px";
+        fetchedBall.style.left = `${ballX + 45}px`;
+      }
 
-      // Brief pause, then walk out to the right
+      // Brief pause, then walk out to the right with ball
       const remainingDistance = window.innerWidth + 150 - ballX;
       const timeToExit = (remainingDistance / totalDistance) * walkDuration;
 
@@ -158,8 +167,14 @@ function fetchBallAtlas(walkDuration) {
         img.style.transition = `left ${timeToExit}ms linear`;
         img.style.left = `${window.innerWidth + 150}px`;
 
+        if (fetchedBall) {
+          fetchedBall.style.transition = `left ${timeToExit}ms linear`;
+          fetchedBall.style.left = `${window.innerWidth + 195}px`;
+        }
+
         setTimeout(() => {
           img.remove();
+          if (fetchedBall) fetchedBall.remove();
         }, timeToExit + 100);
       }, 500);
     }, timeToBall + 100);

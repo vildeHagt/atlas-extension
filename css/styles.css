@@ -85,21 +85,21 @@ span:hover .tooltiptext {
 
 @keyframes atlas-ball-drop {
   0% {
-    top: -20px;
+    bottom: 100vh;
   }
   55% {
-    top: calc(100vh - 18px);
+    bottom: 2px;
   }
   70% {
-    top: calc(100vh - 80px);
+    bottom: 60px;
   }
   82% {
-    top: calc(100vh - 18px);
+    bottom: 2px;
   }
   90% {
-    top: calc(100vh - 40px);
+    bottom: 30px;
   }
   100% {
-    top: calc(100vh - 18px);
+    bottom: 2px;
   }
 }
