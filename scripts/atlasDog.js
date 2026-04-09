@@ -79,11 +79,11 @@ function walkAtlasDog(walkDuration) {
 }
 
 function injectWalkingAtlasDog(walkDuration) {
-  var img = document.getElementById(ATLAS_ID);
+  let img = document.getElementById(ATLAS_ID);
   if (img != null) {
     img.remove();
   }
-  var ball = document.getElementById(BALL_ID);
+  const ball = document.getElementById(BALL_ID);
   if (ball != null) {
     ball.remove();
   }
@@ -101,7 +101,7 @@ function injectWalkingAtlasDog(walkDuration) {
 }
 
 function createTennisBall(x) {
-  var ball = document.getElementById(BALL_ID);
+  let ball = document.getElementById(BALL_ID);
   if (ball) ball.remove();
 
   ball = document.createElement("div");
@@ -123,42 +123,42 @@ function createTennisBall(x) {
 
 function fetchBallAtlas(walkDuration) {
   // Pick a random landing position for the ball
-  var ballX = Math.floor(Math.random() * (window.innerWidth - 100)) + 50;
+  const ballX = Math.floor(Math.random() * (window.innerWidth - 100)) + 50;
 
   // Drop the tennis ball with a bounce
-  var ball = createTennisBall(ballX);
+  const ball = createTennisBall(ballX);
 
   // After the ball lands, Atlas enters to fetch it
-  setTimeout(function () {
+  setTimeout(() => {
     injectWalkingAtlasDog(walkDuration);
-    var img = document.getElementById(ATLAS_ID);
+    const img = document.getElementById(ATLAS_ID);
     if (!img) return;
 
     // Calculate timing for Atlas to reach the ball
-    var totalDistance = window.innerWidth + 300;
-    var distanceToBall = ballX + 150; // from start (-150) to ballX
-    var timeToBall = (distanceToBall / totalDistance) * walkDuration;
+    const totalDistance = window.innerWidth + 300;
+    const distanceToBall = ballX + 150; // from start (-150) to ballX
+    const timeToBall = (distanceToBall / totalDistance) * walkDuration;
 
     // Walk Atlas toward the ball
-    img.style.transition = "left " + timeToBall + "ms linear";
-    setTimeout(function () {
-      img.style.left = ballX + "px";
+    img.style.transition = `left ${timeToBall}ms linear`;
+    setTimeout(() => {
+      img.style.left = `${ballX}px`;
     }, 100);
 
     // When Atlas reaches the ball, pick it up and walk off screen
-    setTimeout(function () {
+    setTimeout(() => {
       // Remove the ball (Atlas picked it up)
       ball.remove();
 
       // Brief pause, then walk out to the right
-      var remainingDistance = window.innerWidth + 150 - ballX;
-      var timeToExit = (remainingDistance / totalDistance) * walkDuration;
+      const remainingDistance = window.innerWidth + 150 - ballX;
+      const timeToExit = (remainingDistance / totalDistance) * walkDuration;
 
-      setTimeout(function () {
-        img.style.transition = "left " + timeToExit + "ms linear";
-        img.style.left = window.innerWidth + 150 + "px";
+      setTimeout(() => {
+        img.style.transition = `left ${timeToExit}ms linear`;
+        img.style.left = `${window.innerWidth + 150}px`;
 
-        setTimeout(function () {
+        setTimeout(() => {
           img.remove();
         }, timeToExit + 100);
       }, 500);
