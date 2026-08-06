@@ -1,6 +1,6 @@
 {
   "name": "Atlas: Your Dog Buddy",
-  "version": "1.4",
+  "version": "1.5",
   "description": "He's a good boy",
   "manifest_version": 3,
   "icons": {
@@ -13,6 +13,8 @@
       "resources": [
         "gifs/atlasWalk.gif",
         "gifs/christmas-atlas.gif",
+        "gifs/fall-atlasWalk.gif",
+        "gifs/atlas-diggingFall.gif",
         "gifs/atlasDigging.gif",
         "gifs/christmas-atlasDigging.gif"
       ],

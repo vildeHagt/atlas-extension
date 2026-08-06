@@ -3,13 +3,18 @@
 
 const ATLAS_URL = chrome.runtime.getURL("gifs/atlasWalk.gif");
 const XMAS_URL = chrome.runtime.getURL("gifs/christmas-atlas.gif");
+const FALL_URL = chrome.runtime.getURL("gifs/fall-atlasWalk.gif");
 const ATLAS_DIGGING = chrome.runtime.getURL("gifs/atlasDigging.gif");
 const XMAS_DIGGING = chrome.runtime.getURL("gifs/christmas-atlasDigging.gif");
+const FALL_DIGGING = chrome.runtime.getURL("gifs/atlas-diggingFall.gif");
 
 function getWalkingAtlasImageUrl() {
   const now = new Date();
   if (now.getMonth() === 11) {
     return XMAS_URL;
+  }
+  if (now.getMonth() === 7) {
+    return FALL_URL;
   }
   return ATLAS_URL;
 }
@@ -18,6 +23,9 @@ function getDiggingAtlasImageUrl() {
   const now = new Date();
   if (now.getMonth() === 11) {
     return XMAS_DIGGING;
+  }
+  if (now.getMonth() === 7) {
+    return FALL_DIGGING;
   }
   return ATLAS_DIGGING;
 }
