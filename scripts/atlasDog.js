@@ -13,7 +13,7 @@ function getWalkingAtlasImageUrl() {
   if (now.getMonth() === 11) {
     return XMAS_URL;
   }
-  if (now.getMonth() === 7) {
+  if (now.getMonth() === 8) {
     return FALL_URL;
   }
   return ATLAS_URL;
@@ -24,7 +24,7 @@ function getDiggingAtlasImageUrl() {
   if (now.getMonth() === 11) {
     return XMAS_DIGGING;
   }
-  if (now.getMonth() === 7) {
+  if (now.getMonth() === 8) {
     return FALL_DIGGING;
   }
   return ATLAS_DIGGING;
