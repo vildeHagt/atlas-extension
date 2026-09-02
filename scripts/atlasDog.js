@@ -4,29 +4,37 @@
 const ATLAS_URL = chrome.runtime.getURL("gifs/atlasWalk.gif");
 const XMAS_URL = chrome.runtime.getURL("gifs/christmas-atlas.gif");
 const FALL_URL = chrome.runtime.getURL("gifs/fall-atlasWalk.gif");
+const GHOST_URL = chrome.runtime.getURL("gifs/atlasGhost.gif");
 const ATLAS_DIGGING = chrome.runtime.getURL("gifs/atlasDigging.gif");
 const XMAS_DIGGING = chrome.runtime.getURL("gifs/christmas-atlasDigging.gif");
 const FALL_DIGGING = chrome.runtime.getURL("gifs/atlas-diggingFall.gif");
+const GHOST_DIGGING = chrome.runtime.getURL("gifs/ghostGrave.gif");
 
 function getWalkingAtlasImageUrl() {
   const now = new Date();
-  if (now.getMonth() === 11) {
-    return XMAS_URL;
+  switch (9) {
+    case 8:
+      return FALL_URL;
+    case 9:
+      return GHOST_URL;
+    case 11:
+      return XMAS_URL;
   }
-  if (now.getMonth() === 8) {
-    return FALL_URL;
-  }
+
   return ATLAS_URL;
 }
 
 function getDiggingAtlasImageUrl() {
   const now = new Date();
-  if (now.getMonth() === 11) {
-    return XMAS_DIGGING;
+  switch (9) {
+    case 8:
+      return FALL_DIGGING;
+    case 9:
+      return GHOST_DIGGING;
+    case 11:
+      return XMAS_DIGGING;
   }
-  if (now.getMonth() === 8) {
-    return FALL_DIGGING;
-  }
+
   return ATLAS_DIGGING;
 }
 
