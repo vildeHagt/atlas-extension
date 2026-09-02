@@ -11,7 +11,7 @@ const FALL_DIGGING = chrome.runtime.getURL("gifs/atlas-diggingFall.gif");
 const GHOST_DIGGING = chrome.runtime.getURL("gifs/ghostGrave.gif");
 
 function getWalkingAtlasImageUrl() {
-  const now = new Date();
+  const now = new Date().getMonth();
   switch (now) {
     case 8:
       return FALL_URL;
@@ -25,7 +25,7 @@ function getWalkingAtlasImageUrl() {
 }
 
 function getDiggingAtlasImageUrl() {
-  const now = new Date();
+  const now = new Date().getMonth();
   switch (now) {
     case 8:
       return FALL_DIGGING;
