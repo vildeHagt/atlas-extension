@@ -39,6 +39,8 @@ function getDiggingAtlasImageUrl() {
 }
 
 const ATLAS_ID = "atlas-dog-walker";
+const BALL_ID = "atlas-tennis-ball";
+const BALL_DROP_DURATION = 1500;
 
 chrome.storage.sync.get({ atlasInterval: 3, atlasSpeed: 2 }, (items) => {
   const INTERVAL_MINUTES = parseInt(items.atlasInterval, 10);
@@ -50,16 +52,30 @@ chrome.storage.sync.get({ atlasInterval: 3, atlasSpeed: 2 }, (items) => {
   setInterval(() => walkAtlasDog(WALK_DURATION), INTERVAL_MINUTES * 60 * 1000);
 });
 
+function chooseBehavior() {
+  const roll = Math.random();
+  if (roll < 0.33) return "dig";
+  if (roll < 0.66) return "fetch";
+  return "walk";
+}
+
 function walkAtlasDog(walkDuration) {
+  const behavior = chooseBehavior();
+
+  if (behavior === "fetch") {
+    fetchBallAtlas(walkDuration);
+    return;
+  }
+
   injectWalkingAtlasDog(walkDuration);
   const img = document.getElementById(ATLAS_ID);
   if (!img) return;
   img.style.left = "-150px";
   img.style.right = "";
 
-  const digPosition = diggingPosition();
+  const digPos = diggingPosition();
   const totalDistance = window.innerWidth + 300; // -150 to innerWidth + 150
-  const distanceToDigPosition = digPosition + 150; // Distance from start to dig position
+  const distanceToDigPosition = digPos + 150; // Distance from start to dig position
   const timeToDigPosition =
     (distanceToDigPosition / totalDistance) * walkDuration;
 
@@ -67,7 +83,7 @@ function walkAtlasDog(walkDuration) {
     img.style.left = `${window.innerWidth + 150}px`;
   }, 100);
 
-  if (smellsSomethingGood()) {
+  if (behavior === "dig") {
     setTimeout(() => {
       diggingAtlas();
     }, timeToDigPosition);
@@ -78,10 +94,16 @@ function walkAtlasDog(walkDuration) {
   }
 }
 
-function injectWalkingAtlasDog(walkDuration) {
-  var img = document.getElementById(ATLAS_ID);
+function injectWalkingAtlasDog(walkDuration, keepBall) {
+  let img = document.getElementById(ATLAS_ID);
   if (img != null) {
     img.remove();
+  }
+  if (!keepBall) {
+    const ball = document.getElementById(BALL_ID);
+    if (ball != null) {
+      ball.remove();
+    }
   }
   img = document.createElement("img");
   img.src = getWalkingAtlasImageUrl();
@@ -94,6 +116,85 @@ function injectWalkingAtlasDog(walkDuration) {
   img.style.zIndex = 99999;
   img.style.transition = `left ${walkDuration}ms linear`;
   document.body.appendChild(img);
+}
+
+function createTennisBall(x) {
+  let ball = document.getElementById(BALL_ID);
+  if (ball) ball.remove();
+
+  ball = document.createElement("div");
+  ball.id = BALL_ID;
+  ball.style.position = "fixed";
+  ball.style.width = "15px";
+  ball.style.height = "15px";
+  ball.style.borderRadius = "50%";
+  ball.style.backgroundColor = "#ccff00";
+  ball.style.border = "1px solid #a0c800";
+  ball.style.left = x + "px";
+  ball.style.bottom = "100vh";
+  ball.style.zIndex = "99999";
+  ball.style.animation =
+    `atlas-ball-drop ${BALL_DROP_DURATION}ms ease-in forwards`;
+  document.body.appendChild(ball);
+  return ball;
+}
+
+function fetchBallAtlas(walkDuration) {
+  // Drop the ball from the right side of the screen
+  const ballX =
+    Math.floor(Math.random() * (window.innerWidth * 0.3)) +
+    Math.floor(window.innerWidth * 0.6);
+
+  // Drop the tennis ball with a bounce
+  const ball = createTennisBall(ballX);
+
+  // After the ball lands, Atlas enters to fetch it
+  setTimeout(() => {
+    injectWalkingAtlasDog(walkDuration, true);
+    const img = document.getElementById(ATLAS_ID);
+    if (!img) return;
+
+    // Calculate timing for Atlas to reach the ball
+    const totalDistance = window.innerWidth + 300;
+    const distanceToBall = ballX + 150; // from start (-150) to ballX
+    const timeToBall = (distanceToBall / totalDistance) * walkDuration;
+
+    // Walk Atlas toward the ball
+    img.style.transition = `left ${timeToBall}ms linear`;
+    setTimeout(() => {
+      img.style.left = `${ballX}px`;
+    }, 100);
+
+    // When Atlas reaches the ball, attach ball to mouth and walk off screen
+    setTimeout(() => {
+      const fetchedBall = document.getElementById(BALL_ID);
+      if (fetchedBall) {
+        // Position ball near Atlas's mouth (right side, vertically centered)
+        fetchedBall.style.animation = "none";
+        fetchedBall.style.bottom = "25px";
+        fetchedBall.style.left = `${ballX + 45}px`;
+      }
+
+      // Brief pause, then walk out to the right with ball
+      const remainingDistance = window.innerWidth + 150 - ballX;
+      const timeToExit = (remainingDistance / totalDistance) * walkDuration;
+
+      setTimeout(() => {
+        img.style.transition = `left ${timeToExit}ms linear`;
+        img.style.left = `${window.innerWidth + 150}px`;
+
+        if (fetchedBall) {
+          fetchedBall.style.transition = `left ${timeToExit}ms linear`;
+          fetchedBall.style.left = `${window.innerWidth + 195}px`;
+        }
+
+        setTimeout(() => {
+          img.remove();
+          if (fetchedBall) fetchedBall.remove();
+        }, timeToExit + 100);
+      }, 500);
+    }, timeToBall + 100);
+  }, BALL_DROP_DURATION);
 }
 
 function diggingAtlas() {
@@ -119,9 +220,4 @@ function diggingAtlas() {
 
 function diggingPosition() {
   return Math.floor(Math.random() * window.innerWidth);
-}
-
-function smellsSomethingGood() {
-  const shouldDig = Math.random() < 0.5;
-  return shouldDig;
 }
